@@ -1,0 +1,120 @@
+#body_product_main{
+	background-image:url('../resource/bg_body.jpg');
+	width:1000px;
+	height:500px;
+	overflow:hidden;
+	margin:0px auto;
+	text-align:center;
+	margin:5px auto;
+}
+#categories{
+	margin:15px auto;
+	height:30px;
+	width:740px;
+}
+.category{
+	height:30px;
+	width:100px;
+	margin:0px 20px;
+	float:left;
+	line-height:30px;
+	vertical-align:middle;
+	font-family:'华文楷体';
+	font-size:18px;
+}
+.category a:link{
+	display:block;
+	height:30px;
+	width:100px;
+	color:#FFF;
+	background-image:url('../resource/cate_tab.jpg');
+}
+.category a:visited{
+	color:#FFF;
+}
+.category a:hover{
+	background-image:url('../resource/cate_tab1.jpg');
+	color:#2837FC;
+}
+.cur_category a:link{
+	background-image:url('../resource/cate_tab1.jpg');
+	color:#2837FC;
+}
+.left_pointer{
+	width:13px;
+	height:200px;
+	background-image:url('../resource/left_pointer.jpg');
+	margin:150px 0px;
+	float:left;
+	border:1px solid #FFF;
+}
+.right_pointer{
+	width:13px;
+	height:200px;
+	background-image:url('../resource/right_pointer.jpg');
+	margin:150px 0px;
+	float:right;
+	border:1px solid #FFF;
+}
+#products_stage{
+	width:970px;
+	height:470px;
+	margin:0px;
+	float:left;
+}
+.has_border{
+	border:1px solid #2837FC;
+}
+#page_select_div{
+	height:20px;
+	margin:0px auto;
+	padding:5px;
+}
+#page_select{
+	width:50px;
+	height:20px;
+	color:#2837FC;
+	text-align:center;
+	border:1px solid #2837FC;
+}
+.products_wrapper{
+	width:960;
+	height:460px;
+	overflow:hidden;
+	margin:5px;
+	position:relative;
+}
+.product_element{
+	width:300px;
+	height:220px;
+	margin:4px 9px;
+	float:left;
+	border:1px solid #2837FC;
+	display:inline;
+}
+.product_img{
+	width:300px;
+	height:160px;
+	overflow:hidden;
+}
+.product_desc{
+	width:300px;
+	height:50px;
+	padding:5px 0px;
+	overflow:hidden;
+}
+.product_desc p{
+	text-align:left;
+	font-family:'华文楷体';
+	font-size:15px;
+	line-height:20px;
+	vertical-align:middle;
+	margin:5px;
+}
+.non_display{
+	background-image:none;
+	border:1px solid #FFF;
+}
+.hid_wrapper{
+	display:none;
+}

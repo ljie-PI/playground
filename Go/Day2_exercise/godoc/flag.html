@@ -1,0 +1,318 @@
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+
+	<!-- PackageName is printed as title by the top-level template -->
+		<p><code>import "flag"</code></p>
+	<p>
+The flag package implements command-line flag parsing.
+</p>
+<p>
+Usage:
+</p>
+<p>
+Define flags using flag.String(), Bool(), Int(), etc. Example:
+</p>
+<pre>import &#34;flag&#34;
+var ip *int = flag.Int(&#34;flagname&#34;, 1234, &#34;help message for flagname&#34;)
+</pre>
+<p>
+If you like, you can bind the flag to a variable using the Var() functions.
+</p>
+<pre>var flagvar int
+func init() {
+	flag.IntVar(&amp;flagvar, &#34;flagname&#34;, 1234, &#34;help message for flagname&#34;)
+}
+</pre>
+<p>
+Or you can create custom flags that satisfy the Value interface (with
+pointer receivers) and couple them to flag parsing by
+</p>
+<pre>flag.Var(&amp;flagVal, &#34;name&#34;, &#34;help message for flagname&#34;)
+</pre>
+<p>
+For such flags, the default value is just the initial value of the variable.
+</p>
+<p>
+After all flags are defined, call
+</p>
+<pre>flag.Parse()
+</pre>
+<p>
+to parse the command line into the defined flags.
+</p>
+<p>
+Flags may then be used directly. If you&#39;re using the flags themselves,
+they are all pointers; if you bind to variables, they&#39;re values.
+</p>
+<pre>fmt.Println(&#34;ip has value &#34;, *ip);
+fmt.Println(&#34;flagvar has value &#34;, flagvar);
+</pre>
+<p>
+After parsing, the arguments after the flag are available as the
+slice flag.Args() or individually as flag.Arg(i).
+The arguments are indexed from 0 up to flag.NArg().
+</p>
+<p>
+Command line flag syntax:
+</p>
+<pre>-flag
+-flag=x
+-flag x  // non-boolean flags only
+</pre>
+<p>
+One or two minus signs may be used; they are equivalent.
+The last form is not permitted for boolean flags because the
+meaning of the command
+</p>
+<pre>cmd -x *
+</pre>
+<p>
+will change if there is a file called 0, false, etc.  You must
+use the -flag=false form to turn off a boolean flag.
+</p>
+<p>
+Flag parsing stops just before the first non-flag argument
+(&#34;-&#34; is a non-flag argument) or after the terminator &#34;--&#34;.
+</p>
+<p>
+Integer flags accept 1234, 0664, 0x1234 and may be negative.
+Boolean flags may be 1, 0, t, f, true, false, TRUE, FALSE, True, False.
+</p>
+<p>
+It is safe to call flag.Parse multiple times, possibly after changing
+os.Args.  This makes it possible to implement command lines with
+subcommands that enable additional flags, as in:
+</p>
+<pre>flag.Bool(...)  // global options
+flag.Parse()  // parse leading command
+subcmd := flag.Args(0)
+switch subcmd {
+	// add per-subcommand options
+}
+os.Args = flag.Args()
+flag.Parse()
+</pre>
+
+			<p>
+			<h4>Package files</h4>
+			<span style="font-size:90%">
+				<a href="/opt/go/src/pkg/flag/flag.go">flag.go</a>
+			</span>
+			</p>
+		<h2 id="Variables">Variables</h2>
+			<p>
+Usage prints to standard error a default usage message documenting all defined flags.
+The function is a variable that may be changed to point to a custom function.
+</p>
+
+			<pre>var Usage = func() {
+    fmt.Fprintf(os.Stderr, &#34;Usage of %s:\n&#34;, os.Args[0])
+    PrintDefaults()
+}</pre>
+			<h2 id="Arg">func <a href="/opt/go/src/pkg/flag/flag.go?s=7126:7148#L281">Arg</a></h2>
+			<p><code>func Arg(i int) string</code></p>
+			<p>
+Arg returns the i&#39;th command-line argument.  Arg(0) is the first remaining argument
+after flags have been processed.
+</p>
+
+			<h2 id="Args">func <a href="/opt/go/src/pkg/flag/flag.go?s=7402:7422#L292">Args</a></h2>
+			<p><code>func Args() []string</code></p>
+			<p>
+Args returns the non-flag command-line arguments.
+</p>
+
+			<h2 id="Bool">func <a href="/opt/go/src/pkg/flag/flag.go?s=7895:7949#L302">Bool</a></h2>
+			<p><code>func Bool(name string, value bool, usage string) *bool</code></p>
+			<p>
+Bool defines a bool flag with specified name, default value, and usage string.
+The return value is the address of a bool variable that stores the value of the flag.
+</p>
+
+			<h2 id="BoolVar">func <a href="/opt/go/src/pkg/flag/flag.go?s=7616:7676#L296">BoolVar</a></h2>
+			<p><code>func BoolVar(p *bool, name string, value bool, usage string)</code></p>
+			<p>
+BoolVar defines a bool flag with specified name, default value, and usage string.
+The argument p points to a bool variable in which to store the value of the flag.
+</p>
+
+			<h2 id="Float">func <a href="/opt/go/src/pkg/flag/flag.go?s=11361:11418#L386">Float</a></h2>
+			<p><code>func Float(name string, value float, usage string) *float</code></p>
+			<p>
+Float defines a float flag with specified name, default value, and usage string.
+The return value is the address of a float variable that stores the value of the flag.
+</p>
+
+			<h2 id="Float64">func <a href="/opt/go/src/pkg/flag/flag.go?s=11963:12026#L400">Float64</a></h2>
+			<p><code>func Float64(name string, value float64, usage string) *float64</code></p>
+			<p>
+Float64 defines a float64 flag with specified name, default value, and usage string.
+The return value is the address of a float64 variable that stores the value of the flag.
+</p>
+
+			<h2 id="Float64Var">func <a href="/opt/go/src/pkg/flag/flag.go?s=11663:11732#L394">Float64Var</a></h2>
+			<p><code>func Float64Var(p *float64, name string, value float64, usage string)</code></p>
+			<p>
+Float64Var defines a float64 flag with specified name, default value, and usage string.
+The argument p points to a float64 variable in which to store the value of the flag.
+</p>
+
+			<h2 id="FloatVar">func <a href="/opt/go/src/pkg/flag/flag.go?s=11075:11138#L380">FloatVar</a></h2>
+			<p><code>func FloatVar(p *float, name string, value float, usage string)</code></p>
+			<p>
+FloatVar defines a float flag with specified name, default value, and usage string.
+The argument p points to a float variable in which to store the value of the flag.
+</p>
+
+			<h2 id="Int">func <a href="/opt/go/src/pkg/flag/flag.go?s=8456:8507#L316">Int</a></h2>
+			<p><code>func Int(name string, value int, usage string) *int</code></p>
+			<p>
+Int defines an int flag with specified name, default value, and usage string.
+The return value is the address of an int variable that stores the value of the flag.
+</p>
+
+			<h2 id="Int64">func <a href="/opt/go/src/pkg/flag/flag.go?s=9032:9089#L330">Int64</a></h2>
+			<p><code>func Int64(name string, value int64, usage string) *int64</code></p>
+			<p>
+Int64 defines an int64 flag with specified name, default value, and usage string.
+The return value is the address of an int64 variable that stores the value of the flag.
+</p>
+
+			<h2 id="Int64Var">func <a href="/opt/go/src/pkg/flag/flag.go?s=8744:8807#L324">Int64Var</a></h2>
+			<p><code>func Int64Var(p *int64, name string, value int64, usage string)</code></p>
+			<p>
+Int64Var defines an int64 flag with specified name, default value, and usage string.
+The argument p points to an int64 variable in which to store the value of the flag.
+</p>
+
+			<h2 id="IntVar">func <a href="/opt/go/src/pkg/flag/flag.go?s=8182:8239#L310">IntVar</a></h2>
+			<p><code>func IntVar(p *int, name string, value int, usage string)</code></p>
+			<p>
+IntVar defines an int flag with specified name, default value, and usage string.
+The argument p points to an int variable in which to store the value of the flag.
+</p>
+
+			<h2 id="NArg">func <a href="/opt/go/src/pkg/flag/flag.go?s=7305:7320#L289">NArg</a></h2>
+			<p><code>func NArg() int</code></p>
+			<p>
+NArg is the number of arguments remaining after flags have been processed.
+</p>
+
+			<h2 id="NFlag">func <a href="/opt/go/src/pkg/flag/flag.go?s=6956:6972#L277">NFlag</a></h2>
+			<p><code>func NFlag() int</code></p>
+			
+			<h2 id="Parse">func <a href="/opt/go/src/pkg/flag/flag.go?s=14387:14399#L492">Parse</a></h2>
+			<p><code>func Parse()</code></p>
+			<p>
+Parse parses the command-line flags.  Must be called after all flags are defined
+and before any are accessed by the program.
+</p>
+
+			<h2 id="PrintDefaults">func <a href="/opt/go/src/pkg/flag/flag.go?s=6324:6344#L249">PrintDefaults</a></h2>
+			<p><code>func PrintDefaults()</code></p>
+			<p>
+PrintDefaults prints to standard error the default values of all defined flags.
+</p>
+
+			<h2 id="Set">func <a href="/opt/go/src/pkg/flag/flag.go?s=6055:6088#L235">Set</a></h2>
+			<p><code>func Set(name, value string) bool</code></p>
+			<p>
+Set sets the value of the named flag.  It returns true if the set succeeded; false if
+there is no such flag defined.
+</p>
+
+			<h2 id="String">func <a href="/opt/go/src/pkg/flag/flag.go?s=10781:10834#L372">String</a></h2>
+			<p><code>func String(name, value string, usage string) *string</code></p>
+			<p>
+String defines a string flag with specified name, default value, and usage string.
+The return value is the address of a string variable that stores the value of the flag.
+</p>
+
+			<h2 id="StringVar">func <a href="/opt/go/src/pkg/flag/flag.go?s=10495:10554#L366">StringVar</a></h2>
+			<p><code>func StringVar(p *string, name, value string, usage string)</code></p>
+			<p>
+StringVar defines a string flag with specified name, default value, and usage string.
+The argument p points to a string variable in which to store the value of the flag.
+</p>
+
+			<h2 id="Uint">func <a href="/opt/go/src/pkg/flag/flag.go?s=9604:9658#L344">Uint</a></h2>
+			<p><code>func Uint(name string, value uint, usage string) *uint</code></p>
+			<p>
+Uint defines a uint flag with specified name, default value, and usage string.
+The return value is the address of a uint variable that stores the value of the flag.
+</p>
+
+			<h2 id="Uint64">func <a href="/opt/go/src/pkg/flag/flag.go?s=10191:10251#L358">Uint64</a></h2>
+			<p><code>func Uint64(name string, value uint64, usage string) *uint64</code></p>
+			<p>
+Uint64 defines a uint64 flag with specified name, default value, and usage string.
+The return value is the address of a uint64 variable that stores the value of the flag.
+</p>
+
+			<h2 id="Uint64Var">func <a href="/opt/go/src/pkg/flag/flag.go?s=9898:9964#L352">Uint64Var</a></h2>
+			<p><code>func Uint64Var(p *uint64, name string, value uint64, usage string)</code></p>
+			<p>
+Uint64Var defines a uint64 flag with specified name, default value, and usage string.
+The argument p points to a uint64 variable in which to store the value of the flag.
+</p>
+
+			<h2 id="UintVar">func <a href="/opt/go/src/pkg/flag/flag.go?s=9325:9385#L338">UintVar</a></h2>
+			<p><code>func UintVar(p *uint, name string, value uint, usage string)</code></p>
+			<p>
+UintVar defines a uint flag with specified name, default value, and usage string.
+The argument p points to a uint variable in which to store the value of the flag.
+</p>
+
+			<h2 id="Var">func <a href="/opt/go/src/pkg/flag/flag.go?s=12269:12317#L408">Var</a></h2>
+			<p><code>func Var(value Value, name string, usage string)</code></p>
+			<p>
+Var defines a user-typed flag with specified name, default value, and usage string.
+The argument p points to a Value variable in which to store the value of the flag.
+</p>
+
+			<h2 id="Visit">func <a href="/opt/go/src/pkg/flag/flag.go?s=5706:5732#L222">Visit</a></h2>
+			<p><code>func Visit(fn func(*Flag))</code></p>
+			<p>
+Visit visits the flags, calling fn for each. It visits only those flags that have been set.
+</p>
+
+			<h2 id="VisitAll">func <a href="/opt/go/src/pkg/flag/flag.go?s=5531:5560#L215">VisitAll</a></h2>
+			<p><code>func VisitAll(fn func(*Flag))</code></p>
+			<p>
+VisitAll visits the flags, calling fn for each. It visits all flags, even those not set.
+</p>
+
+			<h2 id="Flag">type <a href="/opt/go/src/pkg/flag/flag.go?s=5094:5298#L199">Flag</a></h2>
+			<p>
+A Flag represents the state of a flag.
+</p>
+
+			<p><pre>type Flag struct {
+    Name     string // name as it appears on command line
+    Usage    string // help message
+    Value    Value  // value as set
+    DefValue string // default value (as text); for usage message
+}</pre></p>
+				<h3 id="Flag.Lookup">func <a href="/opt/go/src/pkg/flag/flag.go?s=5869:5899#L229">Lookup</a></h3>
+				<p><code>func Lookup(name string) *Flag</code></p>
+				<p>
+Lookup returns the Flag structure of the named flag, returning nil if none exists.
+</p>
+
+			<h2 id="Value">type <a href="/opt/go/src/pkg/flag/flag.go?s=4991:5050#L193">Value</a></h2>
+			<p>
+Value is the interface to the dynamic value stored in a flag.
+(The default value is represented as a string.)
+</p>
+
+			<p><pre>type Value interface {
+    String() string
+    Set(string) bool
+}</pre></p>
+	<h2>Other packages</h2>
+	<p>
+	<a href="?p=main">main</a><br />
+	</p>

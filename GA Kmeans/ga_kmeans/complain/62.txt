@@ -1,0 +1,2 @@
+《广州电信DNS劫持，导致网页每三次刷新弹出广告，简直是广告轰炸！》内容：本人电话为020-81932950，安装广州电信的ADSL6M速度套餐，最近，本人上网时每打开三个网页，第四个网页就会变成广州电信的弹窗广告。弹窗频率非常频繁，已经严重影响本地用户的正常浏览和日常使用。这种情况众所周知是通过DNS劫持进行的野蛮行为。以下4个地址分别为今天晚上的弹窗截图，和浏览器阻截广告变成保存的情况，最后两个截图是广州电信广告链接的源代码。（1）广告网页截屏：http://pic.yupoo.com/topmantom/B4v2R05G/bptHW.jpg（2）浏览中华网时被DNS劫持转变为广州电信广告，被火狐浏览器拦截：http://pic.yupoo.com/topmantom/B4v9LADO/BhLXT.jpg（3）下载下来的广州电信广告原代码截屏:http://pic.yupoo.com/topmantom/B4v2SV4Q/lELW4.jpg（4）15分钟后，我打开第四个网页变广告截屏：http://pic.yupoo.com/topmantom/B4v9N7WN/japaZ.jpg
+谢谢！

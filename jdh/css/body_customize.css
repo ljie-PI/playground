@@ -1,0 +1,16 @@
+#body_customize_main{
+	background-image:url('../resource/bg_body.jpg');
+	width:1000px;
+	height:500px;
+	overflow:hidden;
+	margin:0px auto;
+	text-align:left;
+	margin:5px auto;
+}
+#body_customize_main a:link{
+	text-decoration:none;
+	background-color:#F27B04;
+}
+#content{
+	margin:5px 20px;
+}
